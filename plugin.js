@@ -27,7 +27,8 @@
         var found = false;
         var imageType = /^image/;
 
-        if (!clipboardData || clipboardData.types.indexOf("text/html")>-1) {
+        //Stop if this image has html version or browser is Firefox (which pastes base64 natively)
+        if (!clipboardData || clipboardData.types.indexOf("text/html")>-1 || clipboardData.mozItemCount) {
             return;
         }
 
