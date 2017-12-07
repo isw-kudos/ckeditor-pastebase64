@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     CKEDITOR.plugins.add('pastebase64', {
@@ -27,8 +27,12 @@
         var found = false;
         var imageType = /^image/;
 
-        //Stop if this image has html version or browser is Firefox (which pastes base64 natively)
-        if (!clipboardData || clipboardData.types.indexOf("text/html")>-1 || clipboardData.mozItemCount) {
+        if (!clipboardData ||
+        		//IE 11 doesn't even fire this paste event but paste base64 natively
+        		clipboardData.mozItemCount || //Firefox will paste base64 natively
+        		(clipboardData.types instanceof Array && clipboardData.types.indexOf("text/html")>-1)|| //Chrome has HTML to paste instead
+        		(clipboardData.types instanceof DOMStringList && clipboardData.types.contains("text/html")) //Edge has HTML to paste instead
+        		) {
             return;
         }
 
