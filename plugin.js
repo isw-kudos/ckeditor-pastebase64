@@ -30,7 +30,7 @@
         if (!clipboardData ||
         		//IE 11 doesn't even fire this paste event but paste base64 natively
         		clipboardData.mozItemCount || //Firefox will paste base64 natively
-        		(clipboardData.types instanceof Array && clipboardData.types.indexOf("text/html")>-1)|| //Chrome has HTML to paste instead
+        		( (clipboardData.types instanceof Array || Array.isArray(clipboardData.types) ) && clipboardData.types.indexOf("text/html")>-1)|| //Chrome has HTML to paste instead
         		(clipboardData.types instanceof DOMStringList && clipboardData.types.contains("text/html")) //Edge has HTML to paste instead
         		) {
             return;
